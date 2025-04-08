@@ -1,4 +1,4 @@
-# MoodMate API - Phase 1
+# MoodMate API
 
 This is the backend API for MoodMate, an AI-powered mental health journaling assistant.
 
@@ -16,5 +16,15 @@ source venv/bin/activate  # or .\venv\Scripts\activate on Windows
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
+
+## MongoDB Setup
+
+Create a `.env` file in the root with:
+
+```
+MONGO_URI=mongodb+srv://<your-cluster-uri>
+```
+
+Or use `mongodb://localhost:27017` if running locally.
 
 Visit `http://127.0.0.1:8000/docs` to test the API via Swagger UI.
