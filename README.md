@@ -6,6 +6,10 @@ This is the backend API for MoodMate, an AI-powered mental health journaling ass
 
 - Accepts journal text input
 - Returns emotion scores using a HuggingFace model
+- Saves journal entries to MongoDB
+- Provides history endpoint to retrieve past entries
+- Generates empathetic replies using Gemini Pro
+- Display a visual trend chart of emotions
 
 ## Run Locally
 
@@ -17,12 +21,13 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-## MongoDB Setup
+## Environment Variables
 
 Create a `.env` file in the root with:
 
 ```
 MONGO_URI=mongodb+srv://<your-cluster-uri>
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 Or use `mongodb://localhost:27017` if running locally.

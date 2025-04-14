@@ -2,3 +2,8 @@ fastapi
 uvicorn
 transformers
 torch
+motor
+python-dotenv
+google-genai
+streamlit
+requests
