@@ -21,6 +21,12 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+To run the visual frontend chart to visualize mood trends in the root directory:
+
+```
+streamlit run dashboard.py
+```
+
 ## Environment Variables
 
 Create a `.env` file in the root with:
