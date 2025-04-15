@@ -49,7 +49,6 @@ if st.button("Analyze and Save Entry"):
             res_data = result.json()
             st.success("Journal saved!")
             st.markdown(f"**Emotions Detected:**")
-            st.json(res_data)  # Show the raw API response
             for emo in res_data["emotions"]:
                 st.markdown(f"- {emo['label']}: {round(emo['score'], 2)}")
 
