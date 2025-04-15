@@ -17,7 +17,7 @@ app = FastAPI()
 # MongoDB setup
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 
-print("Mongo URI:", MONGO_URI)
+#print("Mongo URI:", MONGO_URI)
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
 db = client.moodmate
 

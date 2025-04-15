@@ -9,7 +9,7 @@ st.title("📈 Mood Trends")
 st.markdown("Track how your emotions have changed over time.")
 
 # Call the backend
-API_URL = "http://localhost:8000/mood-trends"
+API_URL = "https://moodmate-api-g9e0.onrender.com/mood-trends"
 response = requests.get(API_URL)
 
 if response.status_code == 200:
