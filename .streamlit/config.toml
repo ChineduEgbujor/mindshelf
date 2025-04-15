@@ -1,0 +1,4 @@
+[theme]
+base="dark"            # Options: "light", "dark"
+primaryColor="#4E7AC7"  # Brand blue
+font="sans serif"

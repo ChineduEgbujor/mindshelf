@@ -41,7 +41,7 @@ async def save_journal(entry: JournalEntry):
                 "message": "Journal already exists",
                 "id": str(existing["_id"]),
                 "emotions": existing["emotions"],
-                "reply": existing["reply"]  # Corrected key from "response" to "reply"
+                "reply": existing["reply"]  
             }
         
         #Analyze emotions and generate a reply
@@ -59,7 +59,8 @@ async def save_journal(entry: JournalEntry):
         return {
             "message": "Journal saved",
             "id": str(result.inserted_id),
-            "reply": reply
+            "reply": reply,
+            "emotions": emotions
         }
     except Exception as e:
         print(f"[ERROR] Failed to save journal: {e}")
