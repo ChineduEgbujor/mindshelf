@@ -1,6 +1,6 @@
 from collections import defaultdict
-from datetime import datetime
-from fastapi import FastAPI, HTTPException
+from datetime import datetime, timedelta
+from fastapi import FastAPI, HTTPException, Request, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from app.model import analyze_emotions
@@ -8,7 +8,7 @@ import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
 from app.gemini import generate_empathetic_reply
-
+from app.firebase_admin import verify_token
 
 load_dotenv()
 
@@ -32,7 +32,12 @@ def analyze(entry: JournalEntry):
     return {"emotions": emotions}
 
 @app.post("/journal")
-async def save_journal(entry: JournalEntry):
+async def save_journal(entry: JournalEntry, authorization: str = Header(None)):
+    # Verify Firebase token
+    uid = verify_token(authorization)
+    if not uid:
+        raise HTTPException(status_code=401, detail="Invalid or missing token")
+    
     try:
         # Check if exact entry exists already
         existing = await db.entries.find_one({"text": entry.text})
@@ -50,6 +55,7 @@ async def save_journal(entry: JournalEntry):
         
         # Save the journal entry with emotions and reply
         doc = {
+            "user_id": uid,
             "text": entry.text,
             "emotions": emotions,
             "reply": reply,
@@ -76,8 +82,11 @@ async def get_history():
     return {"entries": history}
 
 @app.get("/mood-trends")
-async def get_mood_trends():
-    cursor = db.entries.find()
+async def get_mood_trends(authorization: str = Header(None)):
+    uid = verify_token(authorization)
+    if not uid:
+        raise HTTPException(status_code=401, detail="Invalid or missing token")
+    cursor = db.entries.find({"user_id": uid})
     emotion_data = defaultdict(lambda: defaultdict(list))  # {date: {emotion: [scores]}}
 
     async for doc in cursor:
@@ -101,3 +110,39 @@ async def get_mood_trends():
             trends[emotion].append(round(avg_score, 3))
 
     return JSONResponse(content=trends)
+
+@app.get("/streak")
+async def get_streak(authorization: str = Header(None)):
+    uid = verify_token(authorization)
+    if not uid:
+        raise HTTPException(status_code=401, detail="Invalid or missing token")
+
+    cursor = db.entries.find({"user_id": uid}).sort("timestamp", -1)
+    dates = []
+    async for doc in cursor:
+        dates.append(doc["timestamp"].date())
+
+    if not dates:
+        return {"streak": 0, "journaled_today": False}
+
+    # Remove duplicates
+    dates = sorted(set(dates), reverse=True)
+
+    # Calculate streak
+    streak = 0
+    today = datetime.utcnow().date()
+    expected = today
+
+    for date in dates:
+        if date == expected:
+            streak += 1
+            expected -= timedelta(days=1)
+        elif date < expected:
+            break  # streak broken
+
+    journaled_today = (dates[0] == today)
+
+    return {
+        "streak": streak,
+        "journaled_today": journaled_today
+    }
