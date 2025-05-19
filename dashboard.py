@@ -89,9 +89,8 @@ st.sidebar.title("📘 MoodMate")
 st.sidebar.markdown("Welcome back! Here’s how your emotions have been trending.")
 
 # Fetch mood trend data
-# API_URL = "https://moodmate-api-g9e0.onrender.com/mood-trends"
-API_URL = "http://localhost:8000/mood-trends" # For local testing
-# API_URL = "https://moodmate-api-g9e0.onrender.com/mood-trends"
+# API_URL = "http://localhost:8000/mood-trends" # For local testing
+API_URL = "https://moodmate-api-g9e0.onrender.com/mood-trends"
 
 try:
     response = fetch_authenticated('mood-trends')
