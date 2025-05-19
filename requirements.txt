@@ -7,3 +7,8 @@ python-dotenv
 google-genai
 streamlit
 requests
+pandas  # For DataFrame operations in dashboard
+pyrebase4  # For Firebase authentication
+firebase-admin  # For server-side Firebase token verification
+python-multipart  # For FastAPI form handling
+accelerate # For model acceleration
