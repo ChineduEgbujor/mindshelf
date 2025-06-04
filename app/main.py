@@ -1,14 +1,16 @@
 from collections import defaultdict
 from datetime import datetime, timedelta
-from fastapi import FastAPI, HTTPException, Request, Header
-from fastapi.responses import JSONResponse
+from fastapi import File, UploadFile, FastAPI, HTTPException, Request, Header, Form
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 from app.model import analyze_emotions
 import motor.motor_asyncio
 import os
+import io
 from dotenv import load_dotenv
 from app.gemini import generate_empathetic_reply
 from app.firebase_admin import verify_token
+from app.vision import detect_clutter
 
 load_dotenv()
 
@@ -146,3 +148,43 @@ async def get_streak(authorization: str = Header(None)):
         "streak": streak,
         "journaled_today": journaled_today
     }
+
+@app.post("/detect-clutter")
+async def detect_clutter_endpoint(
+    image: UploadFile = File(...),
+    authorization: str = Header(None)
+):
+    try:
+        # Uncomment when ready to implement auth
+        # uid = verify_token(authorization)
+        # if not uid:
+        #     raise HTTPException(status_code=401, detail="Invalid or missing token")
+
+        # Read uploaded file into bytes
+        img_bytes = await image.read()
+
+        # Run detection and await the result
+        result = await detect_clutter(img_bytes)
+
+        # Convert result to base64 for JSON response
+        import base64
+        encoded_image = base64.b64encode(result["annotated_image"]).decode('utf-8')
+
+        return JSONResponse(content={
+            "counts": result["counts"],
+            "annotated_image": encoded_image,
+            "success": True,
+            "message": "Clutter detection completed successfully"
+        })
+    except Exception as e:
+        import traceback
+        print(f"Error in detect_clutter_endpoint: {str(e)}")
+        print(traceback.format_exc())
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": str(e),
+                "message": "Failed to process image"
+            }
+        )

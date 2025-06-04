@@ -12,3 +12,7 @@ pyrebase4  # For Firebase authentication
 firebase-admin  # For server-side Firebase token verification
 python-multipart  # For FastAPI form handling
 accelerate # For model acceleration
+PyMuPDF
+ultralytics
+opencv-python-headless
+Pillow
