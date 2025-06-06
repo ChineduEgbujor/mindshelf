@@ -50,3 +50,97 @@ This full-stack application demonstrates a seamless blend of NLP, computer visio
 ---
 
 ## 📂 Project Structure
+
+```
+mindshelf/
+├── app/                      # Core backend application
+│   ├── main.py              # FastAPI application & routes
+│   ├── model.py             # Emotion analysis model
+│   ├── gemini.py            # Gemini API integration
+│   ├── study.py             # Study assistant functions
+│   ├── vision.py            # YOLOv5 detection logic
+│   └── firebase_admin.py    # Firebase authentication
+├── dashboard/               # Streamlit frontend
+│   ├── dashboard.py         # Main dashboard UI
+│   ├── study_assistant.py   # Study tools interface
+│   └── vision_scanner.py    # Clutter detection UI
+├── .streamlit/              # Streamlit configuration
+├── .env                     # Environment variables
+└── requirements.txt         # Project dependencies
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.9+
+- MongoDB
+- Firebase account
+- Gemini API key
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/ChineduEgbujor/mindshelf.git
+cd mindshelf
+```
+
+2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Configure environment variables in `.env`:
+
+```
+MONGO_URI=your_mongodb_uri
+GEMINI_API_KEY=your_gemini_api_key
+FIREBASE_CREDENTIALS_PATH=path_to_firebase_credentials.json
+```
+
+### Running the Application
+
+1. Start the FastAPI backend:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+2. Launch the Streamlit dashboard:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+## 🔑 API Routes
+
+- `POST /journal` - Save a new journal entry
+- `POST /analyze` - Analyze emotions in text
+- `GET /history` - Retrieve journal history
+- `POST /study/summarize` - Generate study notes
+- `POST /vision/detect` - Analyze workspace clutter
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 👥 Authors
+
+- Chinedu Egbujor
+
+## 🙏 Acknowledgments
+
+- Google Gemini for AI text generation
+- Ultralytics for YOLOv5
+- Hugging Face for DistilBERT
