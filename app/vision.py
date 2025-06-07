@@ -8,7 +8,7 @@ import cv2
 from fastapi import HTTPException
 
 # Load the pretrained YOLOv5s model once at startup
-model = YOLO("yolov5su.pt")  # this will download weights automatically if not present
+model = YOLO("yolov5nu.pt")  # this will download weights automatically if not present
 
 # Map COCO class IDs to human-friendly names you care about
 # YOLOv5s is trained on COCO; classes like "book", "cup", "cell phone" exist.
