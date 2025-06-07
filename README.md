@@ -101,6 +101,13 @@ GEMINI_API_KEY=your_gemini_api_key
 FIREBASE_CREDENTIALS_PATH=path_to_firebase_credentials.json
 ```
 
+4. The YOLOv5 model file (yolov5su.pt) will be automatically downloaded on first run, or you can manually download it:
+
+```bash
+# Optional manual download
+wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov5su.pt
+```
+
 ### Running the Application
 
 1. Start the FastAPI backend:
