@@ -13,17 +13,18 @@ def show_journaling_dashboard():
     # Set page config
     # st.set_page_config(page_title="MoodMate Dashboard", layout="wide")
 
-    firebase_config = {
-        "apiKey": os.getenv("FIREBASE_API_KEY"),
-        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
-        "projectId": os.getenv("FIREBASE_PROJECT_ID"),
-        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
-        "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
-        "appId": os.getenv("FIREBASE_APP_ID"),
-        "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID"),
-        "databaseURL": os.getenv("FIREBASE_DATABASE_URL")
-    }
+    # firebase_config = {
+    #     "apiKey": os.getenv("FIREBASE_API_KEY"),
+    #     "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+    #     "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+    #     "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+    #     "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+    #     "appId": os.getenv("FIREBASE_APP_ID"),
+    #     "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID"),
+    #     "databaseURL": os.getenv("FIREBASE_DATABASE_URL")
+    # }
 
+    firebase_config = st.secrets["firebase"]
 
     firebase = pyrebase.initialize_app(firebase_config)
     auth = firebase.auth()
@@ -92,8 +93,8 @@ def show_journaling_dashboard():
             "Authorization": st.session_state.token
         }
         
-        #base_url = "https://moodmate-api-g9e0.onrender.com"
-        base_url = "http://localhost:8000"  # or your local URL
+        base_url = "https://mindshelf.onrender.com"
+        #base_url = "http://localhost:8000"  # or your local URL
         url = f"{base_url}/{endpoint}"
         
         if method == "GET":
@@ -110,8 +111,8 @@ def show_journaling_dashboard():
     st.sidebar.markdown("Welcome back! Here’s how your emotions have been trending.")
 
     # Fetch mood trend data
-    API_URL = "http://localhost:8000/mood-trends" # For local testing
-    #API_URL = "https://moodmate-api-g9e0.onrender.com/mood-trends"
+    #API_URL = "http://localhost:8000/mood-trends" # For local testing
+    API_URL = "https://mindshelf.onrender.com/mood-trends"
 
     try:
         response = fetch_authenticated('mood-trends')

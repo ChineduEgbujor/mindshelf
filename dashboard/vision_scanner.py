@@ -5,7 +5,10 @@ import base64
 from PIL import Image
 import io
 
-API_URL_BASE = "http://localhost:8000"  # Adjust this URL according to your backend API
+#API_URL_BASE = "http://localhost:8000"  # Adjust this URL according to your backend API
+#API_URL_BASE = "https://mindshelf.onrender.com"
+API_URL_BASE = st.secrets["API_URL_BASE"]  # Use Streamlit secrets for API URL
+
 
 def show_vision_scanner():
     st.title("📷 MindShelf — Clutter Scanner")
