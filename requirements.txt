@@ -16,3 +16,4 @@ PyMuPDF
 ultralytics
 opencv-python-headless
 Pillow
+python-dotenv==1.0.0

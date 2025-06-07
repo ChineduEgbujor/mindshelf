@@ -2,6 +2,10 @@ import streamlit as st
 import requests
 import pandas as pd
 import pyrebase
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def show_journaling_dashboard():
     st.title("📝 MindShelf — Emotional Journaling")
@@ -10,14 +14,14 @@ def show_journaling_dashboard():
     # st.set_page_config(page_title="MoodMate Dashboard", layout="wide")
 
     firebase_config = {
-    "apiKey": "AIzaSyDL2GeCXo5BRoLzQ0r4aKLl0eoF0Q-yhB0",
-    "authDomain": "moodmate-d9029.firebaseapp.com",
-    "projectId": "moodmate-d9029",
-    "storageBucket": "moodmate-d9029.firebasestorage.app",
-    "messagingSenderId": "300158858256",
-    "appId": "1:300158858256:web:797bd70b534c0a75a0c695",
-    "measurementId": "G-3LLJ4RW9MG",
-    "databaseURL": "https://moodmate-d9029-default-rtdb.firebaseio.com/"
+        "apiKey": os.getenv("FIREBASE_API_KEY"),
+        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+        "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+        "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+        "appId": os.getenv("FIREBASE_APP_ID"),
+        "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID"),
+        "databaseURL": os.getenv("FIREBASE_DATABASE_URL")
     }
 
 
